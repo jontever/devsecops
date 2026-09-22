@@ -333,6 +333,11 @@ footer{font-size:9px;color:var(--muted);line-height:1.7;font-style:italic}
  font-size:18px;width:30px;height:30px;border-radius:50%;cursor:pointer;line-height:1}
 .close:hover{background:rgba(255,255,255,.3)}
 .close:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.bnote{font-size:10.4px;color:var(--ink-dim);line-height:1.55}
+.inl{letter-spacing:0;display:inline}
+.m0{margin:0}
+.sw1{background:#4db35a}.sw2{background:#d9efd9}.sw3{background:#ffd24d}
+.sw4{background:#f29a9a}.sw5{background:#e8433f}
 
 @media(max-width:1340px){
  .domains{grid-template-columns:repeat(4,1fr)}
@@ -770,7 +775,7 @@ body.tobe .dwrap{outline:2px dashed #b28f1e;outline-offset:4px;border-radius:4px
    </div>
    <div class="bsec">
     <div class="blab">How to read it</div>
-    <p style="font-size:10.4px;color:var(--ink-dim);line-height:1.55">Lanes show who or what performs the step. The eight pipeline gates appear as gateways, each tagged with its gate number so it ties back to the operating model tab. Where a shape maps to a control, the panel below offers a link straight to its detail.</p>
+    <p class="bnote">Lanes show who or what performs the step. The eight pipeline gates appear as gateways, each tagged with its gate number so it ties back to the operating model tab. Where a shape maps to a control, the panel below offers a link straight to its detail.</p>
    </div>
   </div>
  </div>
@@ -793,20 +798,20 @@ body.tobe .dwrap{outline:2px dashed #b28f1e;outline-offset:4px;border-radius:4px
   <div>
    <b>PIPELINE DEPENDENCY MODEL</b>
    <span class="dsub">AND = every child required &middot; OR = any path suffices &middot; availability figures illustrative.
-   The scale is <b style="letter-spacing:0;display:inline">coverage-weighted effectiveness</b> &mdash; the share of in-scope changes where the control is both present
+   The scale is <b class="inl">coverage-weighted effectiveness</b> &mdash; the share of in-scope changes where the control is both present
    and working. A box with children is scored by its weakest dependency and names it underneath; the combined product is in the detail panel.
-   <b style="letter-spacing:0;display:inline">As-is</b> is the position today; <b style="letter-spacing:0;display:inline">to-be</b> is the position once the planned
+   <b class="inl">As-is</b> is the position today; <b class="inl">to-be</b> is the position once the planned
    artefacts land. The gap between the two views is the investment case.</span>
   </div>
   <div class="dlegend">
    <span><span class="ochip int">INT</span> internal to the tower</span>
    <span><span class="ochip ext">EXT</span> external — MSP or platform</span>
    <span><span class="ochip shr">SHR</span> shared</span>
-   <span><i style="background:#4db35a"></i>&ge;93%</span>
-   <span><i style="background:#d9efd9"></i>82–92%</span>
-   <span><i style="background:#ffd24d"></i>70–82%</span>
-   <span><i style="background:#f29a9a"></i>40–70%</span>
-   <span><i style="background:#e8433f"></i>&lt;40%</span>
+   <span><i class="sw1"></i>&ge;93%</span>
+   <span><i class="sw2"></i>82–92%</span>
+   <span><i class="sw3"></i>70–82%</span>
+   <span><i class="sw4"></i>40–70%</span>
+   <span><i class="sw5"></i>&lt;40%</span>
   </div>
   <div class="dzoom">
    <span class="dtop"><span id="dtoplab">Weakest link, as-is</span> <b id="dtop">&mdash;</b></span>
@@ -867,7 +872,7 @@ Published by <a href="https://cyberassure.uk">cyberassure.uk</a> · Jonathan Sil
    <div><h3>Control detail</h3><ul id="mctrl"></ul></div>
    <div id="mthwrap" hidden><h3>Thresholds — what this gate actually does</h3><table class="th" id="mth"></table></div>
    <div class="riskbox" id="mriskbox">
-    <div class="rh"><span class="sevchip" id="msev"></span><h3 style="margin:0">Risk if not implemented</h3></div>
+    <div class="rh"><span class="sevchip" id="msev"></span><h3 class="m0">Risk if not implemented</h3></div>
     <p id="mrisk"></p>
    </div>
    <div><h3>References</h3><div class="refs" id="mrefs"></div></div>

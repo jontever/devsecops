@@ -27,20 +27,57 @@ implemented, and the framework references.
 
 ## Deploying it
 
-The page is one self-contained HTML file. No build step, no dependencies, no analytics, no external
-requests at runtime.
+Static site on **Vercel**. No build step, no dependencies, no framework, and the page makes no
+network requests at runtime.
 
 ```
 /
-├── index.html    # the whole thing
-└── og.png        # 1200×630 social preview
+├── index.html        # the whole page — inline CSS and JS, data-URI favicon
+├── og.png            # 1200x630 social preview
+├── vercel.json       # security headers and caching
+├── hash.py           # regenerates the CSP hashes (see below)
+├── .vercelignore     # keeps hash.py and this file off the deployment
+└── README.md
 ```
 
-Drop both at the web root of `devsecops.cyberassure.uk` and it works. `og.png` must sit next to
-`index.html` unless you change the two `og:image` / `twitter:image` URLs in `<head>` — Open Graph
-images have to be absolute URLs, so unlike the favicon they can't be inlined.
+Import the repo in Vercel and pick **Other** as the framework preset — leave build command and
+output directory empty. Everything else is in `vercel.json`. Then point the
+`devsecops.cyberassure.uk` CNAME at Vercel under Settings → Domains.
 
-Works equally well opened from `file://`, which is the easiest way to preview a change.
+Locally: `npx vercel dev`, or just open `index.html` from `file://` for a quick look (the headers
+won't apply, but the page will).
+
+`og.png` must stay at the web root next to `index.html`, because Open Graph images have to be
+absolute URLs — unlike the favicon, it can't be inlined. Move it and you must update the two
+`og:image` / `twitter:image` URLs in `<head>`.
+
+### Security headers
+
+`vercel.json` sets HSTS with preload, `X-Content-Type-Options`, `Referrer-Policy`, a locked-down
+`Permissions-Policy`, COOP/CORP, and a **strict Content-Security-Policy** that starts from
+`default-src 'none'` and allows only what the page actually needs:
+
+```
+script-src  'sha256-…'      one hashed inline block, no 'unsafe-inline', no 'unsafe-eval'
+style-src   'sha256-…'      same — there are no style attributes left in the markup
+img-src     'self' data:    the data-URI favicon
+connect-src 'none'          the page never calls out
+```
+
+`og.png` gets `Cross-Origin-Resource-Policy: cross-origin` so preview renderers can load it.
+
+### After editing index.html
+
+The CSP pins the inline `<style>` and `<script>` by SHA-256, so **any** edit to either — one
+character — invalidates the hash and the browser will refuse to run the page. Regenerate before
+you push:
+
+```bash
+python3 hash.py     # rewrites the two hashes in vercel.json, prints them
+```
+
+That's the whole maintenance cost of not shipping `'unsafe-inline'`. Worth automating in CI if the
+page changes often: run `hash.py` and fail the build if `vercel.json` comes back dirty.
 
 ## Editing it
 
